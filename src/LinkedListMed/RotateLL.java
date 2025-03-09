@@ -14,13 +14,12 @@ public class RotateLL {
 
         k = k % len;
 
-
         int nIterations = len - k - 1;
         while (nIterations != 0) {
             temp = temp.next;
             nIterations--;
         }
-        // temp is the pivot now
+        // temp is the pivot now, so sever the tail holding on to head
         ListNode newHead = temp.next;
         temp.next = null;
 
