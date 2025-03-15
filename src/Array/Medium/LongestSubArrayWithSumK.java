@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class LongestSubArrayWithSumK {
 
-    public int longestSubarrayOptimalForJustPositives(int[] arr, int k) {
+    public static int longestSubarrayOptimalForJustPositives(int[] arr, int k) {
         int N = arr.length;
         int leftPtr = 0;
         int rightPtr = 0;
@@ -14,20 +14,22 @@ public class LongestSubArrayWithSumK {
         int sum = 0;
         while (rightPtr < N) {
             sum += arr[rightPtr];
-
             // Trim the left part if sum > K
             while (leftPtr < rightPtr && sum > k) {
                 sum -= arr[leftPtr++];
             }
-
             if (sum == k) {
                 maxLen = Math.max(rightPtr - leftPtr + 1, maxLen);
             }
-
             rightPtr++;
         }
-
         return maxLen;
+    }
+
+    public static void main(String[] args) {
+        int[] arr = new int[] {1};
+        System.out.println(longestSubarrayOptimalForJustPositives(arr, 0));
+
     }
 
     public int longestSubarray(int[] arr, int k) {
@@ -44,7 +46,7 @@ public class LongestSubArrayWithSumK {
                 maxLen = Math.max(maxLen, i + 1);
             }
             long rem = sumTillNow - k;
-            // Now, check in the map whether we have ahd remaining sum up till now to compute the len of required sub array
+            // Now, check in the map whether we have remaining sum up till now to compute the len of required sub array
             if (presSumMap.containsKey(rem)) {
                 int lenSubArr = i - presSumMap.get(rem);
                 maxLen = Math.max(lenSubArr, maxLen);

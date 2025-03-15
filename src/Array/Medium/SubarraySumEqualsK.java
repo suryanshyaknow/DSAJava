@@ -1,6 +1,30 @@
 package Array.Medium;
 
+import java.util.HashMap;
+
 public class SubarraySumEqualsK {
+
+    public static int subarraySumOptimal(int[] arr, int k) {
+        int count = 0;
+        int N = arr.length;
+
+        long currentSum = 0; // x
+        HashMap<Long, Integer> prefixSumFreqMap = new HashMap<>();
+
+        for (int i = 0; i < N; i++) {
+            currentSum += arr[i]; // That's gonna act as prefixSum for forthcoming arrays
+            // See if sum till now equals k
+            if (currentSum == k) count += 1;
+
+            long remSum = currentSum - k; // X - k
+            if (prefixSumFreqMap.containsKey(remSum)) {
+                count += prefixSumFreqMap.get(remSum); // How many arrays do we have w prefixSum as their sum?
+            }
+            prefixSumFreqMap.put(currentSum, prefixSumFreqMap.getOrDefault(currentSum, 0) + 1);
+        }
+
+        return count;
+    }
 
     public static int subarraySum(int[] arr, int k) { // Shall only work if it's ensured that array contains only positive numbers
         int count = 0;
@@ -43,8 +67,8 @@ public class SubarraySumEqualsK {
     }
 
     public static void main(String[] args) {
-        int[] arr = new int[] {1};
-        subarraySum(arr, 0);
+        int[] arr = new int[]{1, 1, 1};
+        subarraySumOptimal(arr, 2);
     }
 
 }
