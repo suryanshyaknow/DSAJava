@@ -14,17 +14,13 @@ public class DutchNationalFlagProblem {
         while (ptr <= high) {
             if (arr[ptr] == 0) {
                 // Swap with the low ele and increment the low
-                int temp = arr[ptr];
-                arr[ptr] = arr[low];
-                arr[low] = temp;
+                swap(arr, ptr, low);
                 low++;
                 ptr++; // Because this currentEle (after swap) will get handled (even if it's 2) in future while getting swapped with 0
-                // Nope, couldn't be it. Because ptr would've already been iterated over it, and it will already be at the end of the array.
+                // Nope, couldn't be it. Because ptr would've already iterated over it, and it will already be at the end of the array.
             } else if (arr[ptr] == 2) {
                 // Swap with the high ele and decrement the low
-                int temp = arr[ptr];
-                arr[ptr] = arr[high];
-                arr[high] = temp;
+                swap(arr, ptr, high);
                 high--;
             } else {
                 ptr++;
@@ -52,8 +48,14 @@ public class DutchNationalFlagProblem {
         return arr;
     }
 
+    private static void swap(int[] arr, int temp, int rightPtr) {
+        int tempEle = arr[temp];
+        arr[temp] = arr[rightPtr];
+        arr[rightPtr] = tempEle;
+    }
+
     public static void main(String[] args) {
-        int arr[] = {1, 0, 2, 1, 0};
+        int arr[] = {1, 2, 0};
         System.out.println(Arrays.toString(sort(arr)));
 
         int arr1[] = {2, 2, 0, 1, 2, 0};

@@ -42,7 +42,7 @@ public class PairWithTargetSum {
                     high = mid - 1;
                 }
             }
-        }
+        } // O(N log N)
         return new int[]{-1, -1};
     }
 
