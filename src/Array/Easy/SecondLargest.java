@@ -28,7 +28,7 @@ public class SecondLargest {
             if (arr[i] < smallest) {
                 sSmallest = smallest;
                 smallest = arr[i];
-            } else if (arr[i] < sSmallest && arr[i] < smallest) {
+            } else if (arr[i] < sSmallest && arr[i] > smallest) {
                 sSmallest = arr[i];
             }
         }
@@ -56,7 +56,7 @@ public class SecondLargest {
     public static void main(String[] args) {
         int[] arr = new int[]{12, 35, 1, 10, 34, 1};
         System.out.println(getSecondLargestOptimal(arr));
-        System.out.println(getSecondSmallestOptimal(arr));
+//        System.out.println(getSecondSmallestOptimal(arr));
     }
 
 
