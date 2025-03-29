@@ -6,84 +6,109 @@ import java.util.List;
 
 public class RearrangeEleBySign {
 
-    public static int[] rearrangeArrayUsingBruteForce(int[] nums) {
-        int N = nums.length;
-        int[] posArr = new int[N / 2];
-        int posIdx = 0;
-        int[] negArr = new int[N / 2];
-        int negIdx = 0;
-        // Populate negArr and posArr
+//    You are given a 0-indexed integer array nums of even length consisting of an equal number of positive and negative integers.
+//
+//    You should return the array of nums such that the array follows the given conditions:
+//
+//    Every consecutive pair of integers have opposite signs.
+//    For all integers with the same sign, the order in which they were present in nums is preserved.
+//    The rearranged array begins with a positive integer.
+//    Return the modified array after rearranging the elements to satisfy the aforementioned conditions.
+
+    public static int[] rearrangeArrayUsingBruteForce(int[] arr) {
+        if (arr.length == 1) return arr;
+        int N = arr.length;
+
+        // We're gonna initialize two arrays each for a diff sign and populate them accordingly
+        int[] posEle = new int[N / 2];
+        int[] negEle = new int[N / 2];
+        int negPtr = 0;
+        int posPtr = 0;
         for (int i = 0; i < N; i++) {
-            if (nums[i] < 0)
-                negArr[negIdx++] = nums[i];
+            if (arr[i] >= 0)
+                posEle[posPtr++] = arr[i];
             else
-                posArr[posIdx++] = nums[i];
+                negEle[negPtr++] = arr[i];
         }
 
-        // Rearrange the original array
+        // Now, we're gonna repopulate the original arrays according to the given statement
         for (int i = 0; i < N / 2; i++) {
-            nums[2 * i] = posArr[i];
-            nums[2 * i + 1] = negArr[i];
+            arr[2 * i] = posEle[i];
+            arr[2 * i + 1] = negEle[i];
         }
-        return nums;
+
+        return arr;
     }
 
-    public static int[] rearrangeArrayUsingBruteForceWhereNegativesAndPositivesAreNotEqual(int[] nums) {
-        int N = nums.length;
-        List<Integer> posArr = new ArrayList<>();
-        int posIdx = 0;
-        List<Integer> negArr = new ArrayList<>();
-        int negIdx = 0;
-        // Populate negArr and posArr
+    public static int[] rearrangeArrayUsingBruteForceWhereNegativesAndPositivesAreNotEqual(int[] arr) {
+        int N = arr.length;
+        int res[] = new int[N];
+        // Count positive and negative numbers
+        int posNums = 0;
+        int negNums = 0;
         for (int i = 0; i < N; i++) {
-            if (nums[i] < 0)
-                negArr.add(negIdx++, nums[i]);
-            else
-                posArr.add(posIdx++, nums[i]);
+            if (arr[i] >= 0) posNums++;
+            else negNums++;
         }
 
-        // Rearrange the original array
-        if (negArr.size() > posArr.size()) {
-            for (int i = 0; i < posArr.size(); i++) {
-                nums[2 * i] = posArr.get(i);
-                nums[2 * i + 1] = negArr.get(i);
+        int requiredIterations = Math.min(posNums, negNums);
+
+        // Implement two pointers to place numbers correctly till one of 'em runs out
+        int posPtr = 0;
+        int negPtr = 1;
+        int i = 0;
+        for (; i < N; i++) {
+            if (arr[i] < 0 && negNums > 0 && negPtr < 2 * requiredIterations) {
+                res[negPtr] = arr[i];
+                negPtr += 2;
+                negNums--;
+            } else if (arr[i] >= 0 && posNums > 0 && posPtr < 2 * requiredIterations) {
+                res[posPtr] = arr[i];
+                posPtr += 2;
+                posNums--;
             }
-            // Fill the remaining negative places
-            int idx = posArr.size() * 2;
-            for (int i = posArr.size(); i < negArr.size(); i++) { // Cuz we have filled 'posArr.length' number of elements
-                nums[idx++] = negArr.get(i);
-            }
-        } else {
-            for (int i = 0; i < negArr.size(); i++) {
-                nums[2 * i] = posArr.get(i);
-                nums[2 * i + 1] = negArr.get(i);
-            }
-            // Fill the remaining positive places
-            int idx = negArr.size() * 2;
-            for (int i = negArr.size(); i < posArr.size(); i++) { // Cuz we have filled 'posArr.length' number of elements
-                nums[idx++] = posArr.get(i);
+
+            // 🚨 Early exit if we've placed all elements that fit in the alternating structure
+            if (posPtr >= 2 * requiredIterations || negPtr >= 2 * requiredIterations) {
+                i++;  // Move i forward to track where we left off
+                break;
             }
         }
-        return nums;
+
+        int remainingEleIdx = (posNums > 0) ? posPtr : negPtr;
+        for (int j = i; i < N; i++) {
+            if (arr[i] >= 0 && posNums > 0) {
+                res[remainingEleIdx++] = arr[j];
+                posNums--;
+            } else {
+                res[remainingEleIdx] = arr[j];
+                negNums--;
+            }
+            res[i] = arr[i];
+        }
+
+        return res;
     }
 
-    public static int[] rearrangeArrayBetter(int[] nums) {
-        // First off, find the first positive sign
-        int N = nums.length;
+    public static int[] rearrangeArrayBetter(int[] arr) {
+        // The effort is to do the same in a single pass
+        int N = arr.length;
         int[] res = new int[N];
+        // Initialize two pointer one for each sign
+        // Pos pointer starts off from zero and moves two points after correctly assigning an element
+        // Neg pointer starts w 1 and moves two points after correctly assigning an element
         int posPtr = 0;
         int negPtr = 1;
 
         for (int i = 0; i < N; i++) {
-            if (nums[i] < 0) {
-                res[negPtr] = nums[i];
+            if (arr[i] < 0) {
+                res[negPtr] = arr[i];
                 negPtr += 2;
             } else {
-                res[posPtr] = nums[i];
+                res[posPtr] = arr[i];
                 posPtr += 2;
             }
         }
-
         return res;
     }
 
