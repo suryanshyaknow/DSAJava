@@ -41,6 +41,7 @@ public class SortArrayMergeSort {
             temp.add(arr[right]);
             right++;
         }
+        // Repopulate array with sorted numbers
         for (int i = low; i <= high; i++) {
             arr[i] = temp.get(i - low);
         }
