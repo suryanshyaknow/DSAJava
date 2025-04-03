@@ -56,11 +56,11 @@ public class PlusOneLinkedList {
 
         head = reverseLL(head); // O(N)
 
-        if (carry == 1) { // New digit is to be appended
+        if (carry > 0) { // New digit is to be appended
             // Create a new node having val 1 and point it towards head
-            ListNode newDigitNode = new ListNode(1);
+            ListNode newDigitNode = new ListNode(carry);
             newDigitNode.next = head;
-            return newDigitNode;
+            head = newDigitNode;
         }
 
         return head;
