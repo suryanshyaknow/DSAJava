@@ -61,29 +61,25 @@ public class LongestConsecutiveSequence {
     public static int longestConsecutive(int[] arr) {
         // code here
         int N = arr.length;
-        int maxCount = 1;
+        int maxLen = 1;
 
         // Simply put we'll process each element and search for its consecutive on its right,
         // and keep track of the longest length.
         for (int i = 0; i < N; i++) {
             int num = arr[i];
             int count = 1;
-            List<Integer> consecutives = new ArrayList<>();
-            consecutives.add(arr[i]);
 
 //            while (linearSearchForConsecutive(arr, num + 1, i + 1)) { // Search for the consecutive from an idx one greater than the current
             // Doing the above will exclude the elements lesser consecutives in a way
             while (linearSearchForConsecutive(arr, num + 1)) {
                 num += 1;
-                consecutives.add(num);
 
                 count += 1;
             }
-            System.out.println(consecutives);
             // Update the max accordingly
-            maxCount = Integer.max(count, maxCount);
+            maxLen = Integer.max(count, maxLen);
         }
-        return maxCount;
+        return maxLen;
     }
 
     private static boolean linearSearchForConsecutive(int[] arr, int ele) {

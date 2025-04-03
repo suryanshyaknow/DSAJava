@@ -18,9 +18,6 @@ public class MoveZeroesToEnd {
 
         int i = ptr + 1;
         while (i <= arr.length - 1) {
-            System.out.println("i: " + i);
-            System.out.println("ptr: " + ptr);
-            System.out.println(Arrays.toString(arr) + "\n");
             if (arr[i] != 0) {
                 swap(arr, ptr, i);
                 ptr++; // Always point to zero

@@ -43,7 +43,7 @@ public class LongestSubArrayWithSumK {
             sumTillNow += arr[i];
             // See if the sum till now equals k
             if (sumTillNow == k) {
-                maxLen = Math.max(maxLen, i + 1);
+                maxLen = Math.max(maxLen, i + 1); // Because of zero based indexing
             }
             long rem = sumTillNow - k;
             // Now, check in the map whether we have remaining sum up till now to compute the len of required sub array
