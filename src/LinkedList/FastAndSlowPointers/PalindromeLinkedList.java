@@ -13,7 +13,7 @@ public class PalindromeLinkedList {
         // Using fast and slow pointers
         ListNode slowPtr = head;
         ListNode fastPtr = head;
-        while (fastPtr != null && fastPtr.next != null) {
+        while (fastPtr.next != null && fastPtr.next.next != null) { // Cuz we gotta stop at the first mid in case of even nodes
             slowPtr = slowPtr.next;
             fastPtr = fastPtr.next.next;
         }

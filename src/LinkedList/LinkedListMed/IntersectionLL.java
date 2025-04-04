@@ -20,7 +20,7 @@ public class IntersectionLL {
         ListNode tempA = headA;
         ListNode tempB = headB;
 
-        while (tempA != tempB) { // Cuz we aren't checking the nodes at the very first iteration
+        while (tempA != tempB) { // Cuz we aren't checking the nodes at the very first iteration in case where a single ll is given
             // Pointers shall be moving
             tempA = tempA.next;
             tempB = tempB.next;
