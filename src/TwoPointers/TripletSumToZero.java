@@ -1,8 +1,6 @@
 package TwoPointers;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class TripletSumToZero {
 
@@ -39,6 +37,31 @@ public class TripletSumToZero {
         - In the worst case, every pair could form a valid triplet, so you end up storing N² triplets.
         - Since storing each triplet takes space, the total space used becomes O(N²).
          */
+    }
+
+    public List<List<Integer>> threeSum(int[] nums) {
+        int N = nums.length;
+        HashSet<List<Integer>> hashSet = new HashSet<>();
+        for (int i = 0; i < N - 2; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue; // Skipping dupes for i
+            int target = -nums[i];
+            HashMap<Integer, Integer> idxMap = new HashMap<>();
+            for (int j = i + 1; j < N; j++) {
+//                if (j > i + 1 && nums[j] == nums[j - 1]) continue; // Skipping dupes for j
+//                Can't do it because if we skip the first val of dupe, then there might not be enough ele present to form a triplet
+//                Example: [0, 0, 0]
+
+                int remDuplet = target - nums[j];
+                if (idxMap.containsKey(remDuplet)) {
+                    List<Integer> triplet = new ArrayList<Integer>(Arrays.asList(nums[i], nums[j], remDuplet));
+                    // Sort it to avoid the dupes
+                    Collections.sort(triplet);
+                    hashSet.add(triplet);
+                }
+                idxMap.put(nums[j], j);
+            }
+        }
+        return new ArrayList<>(hashSet);
     }
 
     public static void main(String[] args) {

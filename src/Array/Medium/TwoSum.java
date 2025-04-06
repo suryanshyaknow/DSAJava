@@ -25,15 +25,13 @@ public class TwoSum {
 
     public int[] twoSumBetter(int[] arr, int target) {
         int N = arr.length;
-
         HashMap<Integer, Integer> idxMap = new HashMap<>();
         for (int i = 0; i < N; i++) {
-            int j = target - arr[i];
-            if (idxMap.containsKey(j))
-                return new int[]{i, idxMap.get(j)};
+            int remDuplet = target - arr[i];
+            if (idxMap.containsKey(remDuplet))
+                return new int[]{i, idxMap.get(remDuplet)};
             idxMap.put(arr[i], i);
         }
-
         return new int[]{-1, -1};
     }
 
