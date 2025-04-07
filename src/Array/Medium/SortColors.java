@@ -17,6 +17,7 @@ public class SortColors {
                 swap(arr, temp, leftPtr);
                 leftPtr++;
                 temp++;
+                // In any case, 2 won't be there between leftPtr and temp because temp woulda already taken care of it
             } else if (arr[temp] == 1)
                 temp++;
             else {

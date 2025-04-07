@@ -35,6 +35,7 @@ public class SetMatrixZeroes {
             }
         }
         // Now process the first row
+        // because if we did otherwise the matrix[0][0] might reflect the wrong val after getting transformed into zero via col marker
         if (matrix[0][0] == 0) {
             for (int j = 0; j < N; j++) {
                 matrix[0][j] = 0;
@@ -77,7 +78,6 @@ public class SetMatrixZeroes {
         // O(M + N)
     }
 
-
     public static void setZeroesBruteForce(int[][] matrix) {
         // First off, iterate through the matrix
         // On encountering a zero, mark its respective row and columns as -1
@@ -108,6 +108,7 @@ public class SetMatrixZeroes {
 
     private static void markColumnNegative(int[][] matrix, int n) {
         // To mark column negative, we gotta downwards row-wise, so column idx remains intact
+        // Important: We gotta keep the original zeroes intact
         for (int i = 0; i < matrix.length; i++) {
             if (matrix[i][n] != 0)
                 matrix[i][n] = -1;
