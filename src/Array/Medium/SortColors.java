@@ -24,6 +24,7 @@ public class SortColors {
                 swap(arr, temp, rightPtr);
                 rightPtr--;
                 // Can't move temp because even now it could either be zero or one.
+                // And if it's zero then we oughta move it to the left.
             }
         }
 

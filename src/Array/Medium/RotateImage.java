@@ -11,12 +11,24 @@ public class RotateImage {
             for (int j = i + 1; j < N; j++) {
                 swap(matrix, i, j);
             }
+        } // O(N^2/ 2) since only halve the matrix is being traversed!
+
+        // OR
+        /*
+        // Step 1: Complement the matrix
+        for (int i=0; i < N; i++) {
+            for (int j=0; j < i; j++) {
+                swap(matrix, i, j);
+            }
         }
+        */
 
         // Reverse the rows
         for (int i = 0; i < N; i++) {
             reverseArr(matrix[i]);
-        }
+        } // O(N * N/2) => O(N^2/2)
+
+        // Overall: O(N^2)
     }
 
     private static void reverseArr(int[] arr) {
