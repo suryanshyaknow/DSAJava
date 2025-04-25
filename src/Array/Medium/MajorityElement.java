@@ -13,17 +13,16 @@ public class MajorityElement {
         int count = 0;
 
         for (int i = 0; i < N; i++) {
-            if (arr[i] == majEle) {
-                count += 1;
-            } else if (arr[i] != majEle)
-                count -= 1;
-
             if (count == 0) {
                 majEle = arr[i];
                 count += 1;
+            } else if (arr[i] == majEle) {
+                count += 1;
+            } else {
+                count -= 1;
             }
         }
-        // Verify if majEle at the end of the loop is indeed the majority element
+        // Verify if majEle at the end of the loop is indeed the majority element, if the presence of majEle is not guaranteed
         int majEleCount = 0;
         for (int i = 0; i < N; i++) {
             if (arr[i] == majEle)
