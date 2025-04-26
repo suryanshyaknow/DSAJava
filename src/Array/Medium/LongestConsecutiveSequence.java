@@ -1,38 +1,40 @@
 package Array.Medium;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 
 public class LongestConsecutiveSequence {
 
-    public static int longestConsecutiveOptimal(int[] arr) {
-        // So the idea here is pretty simple.
-        // We'll only check for the consecutives if we're sure that the given element doesn't have any lesser consecutive
-        int N = arr.length;
-        int maxCount = 1;
-        HashSet<Integer> hashArr = new HashSet<>();
+    public static int longestConsecutiveOptimal(int[] nums) {
+        int N = nums.length;
+        if (N == 0)
+            return 0;
+        // The idea behind the optimal soln is pretty simple and smart.
+        // We're gonna check for the consecutives only if we're sure that
+        // it had no pre-consecutive.
+        // And to check the presence, no better ds than hash set ;)
 
-        // Populate the hash array
-        for (int ele : arr) {
-            hashArr.add(ele);
-        }
-
-        // Now iterate through the hash array and only check for the consecutives if the ele is a starting point
-        for (int ele : hashArr) {
-            if (!hashArr.contains(ele - 1)) {
-                // Then we check for further consecutives
-                int num = ele + 1;
-                int count = 1;
-                while (hashArr.contains(num)) {
-                    count += 1;
-                    num += 1;
-                }
-                maxCount = Integer.max(maxCount, count);
+        HashSet<Integer> hashSet = new HashSet<>();
+        for (int ele : nums) {
+            hashSet.add(ele);
+        } // O(N) assuming the set is unordered
+        int longest = 1;
+        for (int ele : hashSet) {
+            if (hashSet.contains(ele - 1))
+                continue;
+            int count = 1;
+            while (hashSet.contains(ele + 1)) {
+                count++;
+                ele++;
             }
-        }
-        return maxCount;
+            longest = Integer.max(count, longest);
+        } // O(N)
+        return longest;
+
+        // Time complexity: O(N) + 2O(N)
+        // Even though the while loop checks for consecutive elements, each element of nums is processed only once.
+        // This is because after processing an element as part of one consecutive sequence, it won't be checked again
+        // in subsequent iterations. So, the overall time complexity remains O(N), where N is the number of elements in nums.
     }
 
     public static int longestConsecutiveBetter(int[] arr) {
@@ -55,6 +57,7 @@ public class LongestConsecutiveSequence {
             }  // else we do nothing
             maxCount = Integer.max(maxCount, currentCount);
         }
+
         return maxCount;
     }
 
