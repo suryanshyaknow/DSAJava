@@ -27,37 +27,44 @@ public class LongestSubArrayWithSumK {
     }
 
     public static void main(String[] args) {
-        int[] arr = new int[] {1};
+        int[] arr = new int[]{1};
         System.out.println(longestSubarrayOptimalForJustPositives(arr, 0));
 
     }
 
     public int longestSubarray(int[] arr, int k) {
-        // code here
         int N = arr.length;
-        Map<Long, Integer> presSumMap = new HashMap<>();
+        // code here
+        // Since, we can't dynamically pick the subarrays from
+        // in between having the sum k, we gotta do some reverse
+        // engineering to do that.
+        // Let's consider a point in the array, and the sum till that
+        // ele is 'sum'. Now, if we happen to find a subarray from the start
+        // w sum "sum - k" then from the end of that subarray til the chosen
+        // point will be a aubarray giving us the sum 'k'.
 
-        int maxLen = 0;
-        long sumTillNow = 0;
+        HashMap<Integer, Integer> preSumMap = new HashMap<>();
+        int longest = 0;
+
+        int sum = 0;
         for (int i = 0; i < N; i++) {
-            sumTillNow += arr[i];
-            // See if the sum till now equals k
-            if (sumTillNow == k) {
-                maxLen = Math.max(maxLen, i + 1); // Because of zero based indexing
-            }
-            long rem = sumTillNow - k;
-            // Now, check in the map whether we have remaining sum up till now to compute the len of required sub array
-            if (presSumMap.containsKey(rem)) {
-                int lenSubArr = i - presSumMap.get(rem);
-                maxLen = Math.max(lenSubArr, maxLen);
+            sum += arr[i];
+
+            if (sum == k)
+                longest = Integer.max(longest, i + 1);
+
+            int preSum = sum - k;
+            if (preSumMap.containsKey(preSum)) {
+                int idx = preSumMap.get(preSum);
+                int nEle = i - (idx + 1) + 1;
+                longest = Integer.max(longest, nEle);
             }
 
-            // This would fail for the case where there are leading zeroes in intended sub arrays,
-            // so apparently, we're to keep rem (x - k) to the left as possible.
-            if (!presSumMap.containsKey(sumTillNow))
-                presSumMap.put(sumTillNow, i);
+            // the same 'sum' might act as presum, so we gotta store it in map
+            if (!preSumMap.containsKey(sum))
+                preSumMap.put(sum, i);
         }
-        return maxLen;
+        return longest; 
     }
 
 }
