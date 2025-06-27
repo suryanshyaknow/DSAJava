@@ -9,6 +9,9 @@ public class PrintAllPermutations {
         List<List<Integer>> res = new ArrayList<>();
         getPermutationsOptimal(0, nums, res);
         return res;
+
+        // Time complexity: O(n! * n) ~ Generating n! permutations and each time looping from 0 to n
+        // Space complexity: O(n) ~ perm
     }
 
     static void getPermutationsOptimal(int idx, int[] nums, List<List<Integer>> res) {
