@@ -4,13 +4,13 @@ public class QueueArray {
 
     private int[] queue;
 
-    int front, rear, capacity, size;
+    int front, rear, capacity, currentSize;
 
     public QueueArray(int capacity) {
         this.queue = new int[capacity];
         this.capacity = capacity;
         this.front = this.rear = -1;
-        this.size = 0;
+        this.currentSize = 0;
     }
 
     public int enqueue(int data) {
@@ -18,9 +18,15 @@ public class QueueArray {
             System.out.println("Queue overflow!.");
             return Integer.MIN_VALUE;
         }
-        rear++;
-        size++;
+
+        if (isEmpty()) {
+            front = 0;
+            rear = 0;
+        } else {
+            rear = (rear + 1) % capacity;
+        }
         queue[rear] = data;
+        currentSize += 1;
         return data;
     }
 
@@ -29,17 +35,14 @@ public class QueueArray {
             System.out.println("Sadly, there are no elements to dequeue from the queue!");
             return Integer.MIN_VALUE;
         }
-        int itemToPop = queue[++front];
-//        front++;
-        size--;
-
-        // Edge case: Reset queue when last element has been dequeued
-        // Somewhat efficient approach to REUSE the queue when it gets virtually empty i.e. front == rear,
-        // but still won't suffice cuz now for use to reuse the queue, we'll have to wait till it gets empty.
-        if (front == rear) {
+        int itemToPop = queue[front];
+        if (currentSize == 1) {
             front = -1;
             rear = -1;
+        } else {
+            front = (front + 1) % capacity;
         }
+        currentSize--;
         return itemToPop;
     }
 
@@ -49,26 +52,23 @@ public class QueueArray {
             return;
         }
         int ptr = front;
-        for (int i = 0; i < size; i++) {
-            ptr++;
+        for (int i = 0; i < currentSize; i++) {
             System.out.print(queue[ptr] + " ");
+            ptr = (ptr + 1) % capacity;
         }
         System.out.println();
     }
 
     public boolean isFull() {
-        return rear == capacity - 1;
-//        return size == capacity;
+        return currentSize == capacity;
     }
 
-
     public boolean isEmpty() {
-        return front == rear;
+        return currentSize == 0;
     }
 
     public static void main(String[] args) {
         QueueArray queue = new QueueArray(5);
-
         queue.enqueue(5);
         queue.enqueue(20);
         queue.enqueue(30);
@@ -77,11 +77,11 @@ public class QueueArray {
 //        queue.enqueue(490);
         queue.display();
 
-//        queue.enqueue(400);
-//        queue.enqueue(430);
-//        queue.enqueue(3500000);
-//        queue.display();
-//
+        queue.enqueue(400);
+        queue.enqueue(430);
+        queue.enqueue(3500000);
+        queue.display();
+
         System.out.println("Dequeued: " + queue.dequeue());
         System.out.println("front: " + queue.front + ", rear: " + queue.rear);
         queue.display();
