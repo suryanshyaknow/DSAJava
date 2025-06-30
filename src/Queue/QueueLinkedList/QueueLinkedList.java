@@ -44,14 +44,15 @@ public class QueueLinkedList {
             return Integer.MIN_VALUE;
         }
         int dequeuedData = front.data;
-        // Single element
-        if (rear == front) {
+        if (rear == front) { // Single ele
             rear = front = null;
+            size--;
             return Integer.MIN_VALUE;
+        } else {
+            front = front.next;
+            size--;
+            return dequeuedData;
         }
-        front = front.next;
-        size--;
-        return dequeuedData;
     }
 
     public void display() {

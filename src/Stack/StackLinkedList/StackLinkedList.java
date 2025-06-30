@@ -3,6 +3,7 @@ package Stack.StackLinkedList;
 public class StackLinkedList {
 
     private Node top;
+    private Integer size;
 
     boolean isEmpty() {
         return top == null;
@@ -11,18 +12,15 @@ public class StackLinkedList {
     public void push(int data) {
         try {
             Node newNode = new Node(data);
-            if (top == null) {
-//                System.out.println("Empty stack!");
+            if (top == null) { // Empty stack!
                 top = newNode;
                 return;
             }
-
             newNode.next = top;
             top = newNode;
-
+            size++;
         } catch (Exception e) {
             System.out.println("Heap memory exhausted! Stack's full.");
-            return;
         }
     }
 
@@ -31,12 +29,8 @@ public class StackLinkedList {
             System.out.println("Stack Underflow!");
             return;
         }
-
-        if (top.next == null) {
-            top = null;
-            return;
-        }
-        top = top.next;
+        top = top.next; // Even if there's a single node in stack, this'd automatically set top to null upon popping
+        size--;
     }
 
     public int stackBottom() {
