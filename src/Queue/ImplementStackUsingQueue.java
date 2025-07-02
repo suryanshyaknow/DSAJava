@@ -31,6 +31,7 @@ public class ImplementStackUsingQueue {
             queue.offer(queue.peek());
             queue.poll();
         }
+        // Time complexity: O(N)
     }
 
     public int pop() {
