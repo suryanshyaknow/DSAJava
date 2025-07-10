@@ -15,10 +15,10 @@ public class MinStackOptimal {
     public void push(int val) {
         if (st.isEmpty()) {
             min = val;
-            st.push((long)val);
+            st.push((long) val);
         } else {
             if (val >= min)
-                st.push((long)val);
+                st.push((long) val);
             else {
                 // Encode
                 st.push(2L * val - min);
@@ -34,7 +34,7 @@ public class MinStackOptimal {
 
         // Update the min accordingly
         if (val < min) {
-            min = 2L*min - val;
+            min = 2L * min - val;
         }
     }
 
@@ -42,13 +42,13 @@ public class MinStackOptimal {
         if (st.isEmpty()) return -1;
         long top = st.peek();
         if (top > min)
-            return (int)top;
+            return (int) top;
         else
-            return (int)min;
+            return (int) min;
     }
 
     public int getMin() {
-        return (int)min;
+        return (int) min;
     }
 
 }
