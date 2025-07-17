@@ -6,7 +6,7 @@ public class LargestRectangleInHistogram {
 
     public int largestRectangleAreaOptimal(int[] heights) {
         // The idea is not to precompute PSE and NSE arrays which take 2N each
-        // We anyway would be computing PSE because we'd be traversing from the start ,i.e., via maintaining a stack,
+        // We anyway would be computing PSE because we'd be traversing from the start, i.e., via maintaining a stack,
         // However, when we pop the elements from the stack as they won't be PSE for the current idx ele,
         // we could say that the current idx ele is the NSE, and hence we also get the NSE for the ele to be popped.
         // Thereby, we could compute the area for this ele.
