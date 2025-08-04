@@ -20,7 +20,7 @@ public class LevelOrderTraversal {
 
         queue.offer(root);
         while (!queue.isEmpty()) {
-            int levelSize = queue.size();
+            int levelSize = queue.size(); // No. of nodes present in the stack = No. of nodes in a level
             List<Integer> level = new ArrayList<>();
 
             for (int i = 0; i < levelSize; i++) {
