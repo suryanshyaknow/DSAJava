@@ -12,6 +12,10 @@ public class SlidingWindowMaximum {
         // We'd need a dequeue to do pop from front in order to discard past window maxes,
         // And to do push from the back to record new maxes.
 
+        // - Validate the window, i.e., maintain the deque
+        // - Insert the current ele to record the current max into deque
+        // - Record the max of current window into res
+
         Deque<Integer> deque = new ArrayDeque<>();
         int[] res = new int[N - k + 1];
         int resIdx = 0;
