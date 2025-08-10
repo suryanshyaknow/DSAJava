@@ -14,7 +14,11 @@ public class DiameterOfBinaryTree {
         if (root == null) return 0;
 
         getHeight(root);
-        return dia;
+
+        // Approach 2: Without static var dia
+        int[] res = new int[1];
+        getHeight(root, res);
+        return res[0];
     }
 
     private int getHeight(TreeNode node) {
@@ -22,6 +26,14 @@ public class DiameterOfBinaryTree {
         int leftHeight = getHeight(node.left);
         int rightHeight = getHeight(node.right);
         dia = Integer.max(dia, leftHeight + rightHeight);
+        return 1 + Integer.max(leftHeight, rightHeight);
+    }
+
+    private int getHeight(TreeNode node, int[] res) {
+        if (node == null) return 0;
+        int leftHeight = getHeight(node.left);
+        int rightHeight = getHeight(node.right);
+        res[0] = Integer.max(dia, leftHeight + rightHeight);
         return 1 + Integer.max(leftHeight, rightHeight);
     }
 

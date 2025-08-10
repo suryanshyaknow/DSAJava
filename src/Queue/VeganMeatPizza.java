@@ -1,8 +1,37 @@
 package Queue;
 
 import java.util.Arrays;
+import java.util.Deque;
+import java.util.LinkedList;
 
 public class VeganMeatPizza {
+
+    public static int[] firstNegatives(int[] orderPlaced, int size) {
+        int N = orderPlaced.length;
+        int k = size;
+        int res[] = new int[N - k + 1];
+        int counter = 0;
+
+        // - Validate the current window, i.e., maintain the deque.
+        // - Insert the current -ve ele idx into deque for the current window.
+        // - Record the current window -ve ele into res.
+
+        Deque<Integer> dq = new LinkedList<>();
+
+        for (int i = 0; i < N; i++) {
+            // Validate the deque
+            if (!dq.isEmpty() && dq.peekFirst() <= i - k)
+                dq.pollFirst();
+
+            // Insert the current window -ve ele into dq
+            if (orderPlaced[i] < 0) dq.offer(i);
+
+            // If the window has started, start recording -ve eles into res
+            if (i >= k - 1)
+                res[counter++] = dq.isEmpty() ? 0 : orderPlaced[dq.peekFirst()];
+        }
+        return res;
+    }
 
     public static int[] firstNegativesBruteForce(int[] orderPlaced, int size) {
         int N = orderPlaced.length;
@@ -30,7 +59,7 @@ public class VeganMeatPizza {
 
     public static void main(String[] args) {
         int[] orderPlaced = {-11, -2, 19, 37, 64, -18};
-        System.out.println(Arrays.toString(firstNegativesBruteForce(orderPlaced, 3)));
+        System.out.println(Arrays.toString(firstNegatives(orderPlaced, 3)));
     }
 
 }
