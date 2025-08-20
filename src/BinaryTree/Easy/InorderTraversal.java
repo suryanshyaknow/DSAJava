@@ -13,13 +13,13 @@ public class InorderTraversal {
         if (root == null) return res;
 
         Stack<TreeNode> st = new Stack<>();
-        st.push(root);
         TreeNode curr = root;
+        int counter = 0;
 
-        while (!st.isEmpty()) {
+        while (curr != null || !st.isEmpty()) {
             // Go as left as possible
-            while (curr != null && curr.left != null) {
-                st.push(curr.left);
+            while (curr != null) {
+                st.push(curr);
                 curr = curr.left;
             }
 
@@ -28,11 +28,8 @@ public class InorderTraversal {
             curr = st.pop();
             res.add(curr.val);
 
-            // If right exists, process it and continue left from there
-            if (curr.right != null) {
-                curr = curr.right;
-                st.push(curr);
-            }
+            // Move right
+            curr = curr.right;
         }
         return res;
     }
