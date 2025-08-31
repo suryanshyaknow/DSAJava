@@ -3,11 +3,29 @@ package BinarySearchTree.Medium;
 import BinaryTree.TreeNode;
 
 import java.util.Arrays;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ConstructBSTFromPreorder {
+
+    public TreeNode bstFromPreorderOptimal(int[] preorder) {
+        int[] i = new int[1];
+        i[0] = 0;
+        return bstFromPreorderHelper(preorder, i, Integer.MAX_VALUE);
+
+        // Time Complexity: O(3N)
+        // Space Complexity: O(H)
+    }
+
+    private static TreeNode bstFromPreorderHelper(int[] preorder, int[] i, int bound) {
+        if (i[0] == preorder.length || preorder[i[0]] > bound) return null;
+
+        TreeNode root = new TreeNode(preorder[i[0]++]);
+        root.left = bstFromPreorderHelper(preorder, i, root.val);
+        root.right = bstFromPreorderHelper(preorder, i, bound);
+
+        return root;
+    }
 
     public TreeNode bstFromPreorder(int[] preorder) {
         int[] inorder = Arrays.copyOf(preorder, preorder.length);
