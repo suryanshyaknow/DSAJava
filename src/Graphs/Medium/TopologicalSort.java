@@ -21,7 +21,7 @@ public class TopologicalSort {
 
     public static ArrayList<Integer> topoSort(int V, int[][] edges) {
         // code here
-        // Construct the adj matrix
+        // Construct the adj list
         List<ArrayList<Integer>> adj = new ArrayList<>();
         for (int i = 0; i < V; i++) {
             adj.add(new ArrayList<>());
@@ -38,14 +38,24 @@ public class TopologicalSort {
 
         // Iterate over each vertex and recurse
         for (int i = 0; i < V; i++) {
-//            if (!vis[i]) recurseDFS(i, adj, vis, st);
-            if (!vis[i]) recurseDFSII(i, adj, vis, idx, res);
+            if (!vis[i]) recurseDFS(i, adj, vis, st);
         }
 
-//        for (int i = 0; i < V; i++) {
-//            res.add(st.pop());
-//        }
+        for (int i = 0; i < V; i++) {
+            res.add(st.pop());
+        }
         return res;
+    }
+
+    private static void recurseDFS(int node, List<ArrayList<Integer>> adj, boolean[] vis, Stack<Integer> st) {
+        vis[node] = true;
+
+        // Fetch the neighbors and recurse
+        for (int n : adj.get(node)) {
+            if (!vis[n])
+                recurseDFS(n, adj, vis, st);
+        }
+        st.push(node);
     }
 
     private static void recurseDFSII(int node, List<ArrayList<Integer>> adj, boolean[] vis, int[] idx, ArrayList<Integer> res) {
@@ -60,14 +70,4 @@ public class TopologicalSort {
         idx[0]--;
     }
 
-    private static void recurseDFS(int node, List<ArrayList<Integer>> adj, boolean[] vis, Stack<Integer> st) {
-        vis[node] = true;
-
-        // Fetch the neighbors and recurse
-        for (int n : adj.get(node)) {
-            if (!vis[n])
-                recurseDFS(n, adj, vis, st);
-        }
-        st.push(node);
-    }
 }
