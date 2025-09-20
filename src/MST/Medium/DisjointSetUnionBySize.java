@@ -3,12 +3,12 @@ package MST.Medium;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DisjointSetUnionUsingSize {
+public class DisjointSetUnionBySize {
 
     List<Integer> size = new ArrayList<>();
     List<Integer> parent = new ArrayList<>();
 
-    public DisjointSetUnionUsingSize(int N) {
+    public DisjointSetUnionBySize(int N) {
         for (int i = 0; i < N; i++) {
             size.add(i, 1); // Initially, everyone's size is 1
             parent.add(i, i); // Initially, every node is parent of its own.
@@ -19,10 +19,12 @@ public class DisjointSetUnionUsingSize {
         if (node == parent.get(node)) return node;
 
         // Path compression:
-        return parent.set(node, findUPar(parent.get(node)));
+        int uPar = findUPar(parent.get(node));
+        parent.set(node, uPar);
+        return uPar;
     }
 
-    public void unionByRank(int u, int v) {
+    public void unionBySize(int u, int v) {
         int uUPar = findUPar(u);
         int vUPar = findUPar(v);
         if (uUPar == vUPar) return; // both nodes already belongs to the same component

@@ -22,7 +22,9 @@ public class DisjointSetUnionByRank {
         // This woulda been logarithmic, but we also wanna do path compression for future calls to run in constant time.
 
         // With path compression:
-        return parent.set(node, findUPar(parent.get(node)));
+        int uPar = findUPar(parent.get(node));
+        parent.set(node, uPar);
+        return uPar;
     }
 
     public void unionByRank(int u, int v) {
