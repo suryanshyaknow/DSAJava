@@ -51,7 +51,7 @@ public class LongestCommonSubsequenceDP {
 
         // If the curr characters are a match
         if (s1.charAt(i1) == s2.charAt(i2))
-            return 1 + helper(i1 - 1, i2 - 1, s1, s2, dp);
+            return dp[i1][i2] = 1 + helper(i1 - 1, i2 - 1, s1, s2, dp);
 
         // If not we wanna try all combinations
         int mov1 = helper(i1 - 1, i2, s1, s2, dp);
