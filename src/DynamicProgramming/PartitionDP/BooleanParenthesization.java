@@ -6,7 +6,7 @@ public class BooleanParenthesization {
         // code here
         int N = s.length();
 
-        return countWaysHelper(0, N - 1, 1, s); // Represents the number of ways to evaluate the given exp to true
+        return countWaysHelper(0, N - 1, 1, s); // Represents the number of ways to evaluate a given exp to true
     }
 
     private static int countWaysHelper(int i, int j, int isTrue, String s) {

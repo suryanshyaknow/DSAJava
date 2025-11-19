@@ -14,13 +14,17 @@ public class LargestRectangleInHistogram {
         int maxArea = Integer.MIN_VALUE;
 
         Stack<Integer> st = new Stack<>();
+        // We'll compute nse on the fly
 
+        // Well, think about it, when you're popping ele to discard the
+        // candidates for pse, wouldn't the current ele be their
+        // nse? Just think!
         for (int i = 0; i < N; i++) {
             while (!st.isEmpty() && heights[st.peek()] >= heights[i]) {
                 int ele = st.peek();
                 st.pop();
 
-                int nse = heights[i]; // NSE for ele
+                int nse = i; // NSE for ele
                 int pse = st.peek(); // PSE for ele
                 maxArea = Integer.max(maxArea, heights[ele] * (nse - pse - 1));
             }
@@ -50,15 +54,18 @@ public class LargestRectangleInHistogram {
         // The max area would be the area that could be extended on either end of a current element,
         // i.e. area = heights[i] * (nse (max the area could be extended towards left) - pse (max the area could be extended towards left) - 1)
 
-        int nse[] = getNSE(heights);
-        int pse[] = getPSE(heights);
+        int nse[] = getNSE(heights); // 2N
+        int pse[] = getPSE(heights); // 2N
 
         int maxArea = 0;
         for (int i = 0; i < N; i++) {
             maxArea = Integer.max(maxArea, heights[i] * (nse[i] - pse[i] - 1));
-        }
+        } // N
 
         return maxArea;
+
+        // Time complexity: 5N
+        // Space complexity: 2N (for nse and pse)
     }
 
     private int[] getPSE(int[] arr) {

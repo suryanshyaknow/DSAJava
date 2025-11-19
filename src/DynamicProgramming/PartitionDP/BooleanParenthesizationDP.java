@@ -2,7 +2,7 @@ package DynamicProgramming.PartitionDP;
 
 import java.util.Arrays;
 
-public class BooleanParenethesization {
+public class BooleanParenthesizationDP {
 
     static int countWaysTabulation(String s) {
         // code here
