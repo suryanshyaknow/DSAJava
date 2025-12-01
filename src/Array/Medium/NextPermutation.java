@@ -1,6 +1,5 @@
 package Array.Medium;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class NextPermutation {
@@ -39,7 +38,7 @@ public class NextPermutation {
         }
 
         // Reverse the rest of the array
-        reverseArr(nums, breakingIdx+1);
+        reverseArr(nums, breakingIdx + 1);
     }
 
     private void reverseArr(int[] arr, int i) {
