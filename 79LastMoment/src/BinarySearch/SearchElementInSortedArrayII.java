@@ -8,7 +8,7 @@ public class SearchElementInSortedArrayII {
         // The key idea here is to identify the sorted half
         // and search in it.
         // But since the dupes are employed as well, we've gotta
-        // take care of an extea edge case where low, mid, and high
+        // take care of an extra edge case where low, mid, and high
         // happen to be the same.
 
         int low = 0;
