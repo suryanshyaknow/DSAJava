@@ -6,6 +6,10 @@ public class AggressiveCows {
 
     public int aggressiveCows(int[] stalls, int k) {
         // code here
+
+        // The task is to assign stalls to k cows such that minimum distance bw
+        // any two of them is the maximum possible.
+
         // To ensure that k cows be placed and the minimum distance between any two
         // is max possible, we could try each distance one by one from 1, and try
         // to keep at least that much of the distance between two cows. And see if
@@ -15,7 +19,7 @@ public class AggressiveCows {
         // and apply BS.
 
         int N = stalls.length;
-        // Sort the given array
+        // Sort the given array for greedy assignment of cows
         Arrays.sort(stalls);
         int low = 1;
         int high = stalls[N - 1] - stalls[0]; // the max possible distance between two cows
@@ -48,7 +52,6 @@ public class AggressiveCows {
                 lastPlaced = i;
                 cntCows++;
             }
-
             if (cntCows == k) return true;
         }
 

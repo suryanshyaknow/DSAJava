@@ -5,16 +5,22 @@ public class AllocateBooks {
     public int findPages(int[] arr, int k) {
         // code here
 
+        // The objective is to minimize the maximum number of pages assigned to any student.
+        // In other words, out of all possible allocations, find the arrangement where the
+        // student who receives the most pages still has the smallest possible maximum.
+
         // So we could think of the solution by trying out each
         // maximum (max number of pages allowed to each student)
         // and see if we're able to allocate all the books to
         // each student.
 
-        // Now, about the range
+        // Now, about the range:
         // For each student to be allowed atleast one book we should
-        // start the max from the book having the maximum number of pages.
+        // start with the book having the maximum number of pages.
         // And the highest max could be the summation of all the books
-        //  given the number of students is 1.
+        // given the number of students is 1. The scenario where all books
+        // could be assigned to a single student.
+
         // We're just tryna define the range here.
 
         // First off, if number of students exceed the number of books,
@@ -33,7 +39,6 @@ public class AllocateBooks {
         int low = maxPagesBook;
         int high = arrSum;
         int res = 0;
-
         while (low <= high) {
             int mid = low + (high - low) / 2; // Potential minimized max number of pages allowed
             int studentCnt = computeNumberOfStudents(arr, mid);
