@@ -33,6 +33,9 @@ public class IntersectionLL {
             if (tempA == null) tempA = headB;
             if (tempB == null) tempB = headA;
         }
+        // Note: after switching heads for once they'll level and eventually become equal,
+        // be it any fkn node or they both reach the end simultaneously and become null.
+
         return tempA;
     }
 
