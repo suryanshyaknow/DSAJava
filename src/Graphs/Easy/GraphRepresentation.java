@@ -103,7 +103,7 @@ public class GraphRepresentation {
         // Create an array list and store N+1 arrays list within it.
         ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
 
-        for (int i=0; i <= N; i++) {
+        for (int i = 0; i <= N; i++) {
             adj.add(new ArrayList<>());
         }
 
