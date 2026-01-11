@@ -44,7 +44,7 @@ public class MaxWidth {
             int levelSize = q.size();
             int first = 0;
             int last = 0;
-            int minIdx = q.peek().idx;
+            int minIdx = q.peek().idx; // first node of a level
 
             // We've gotta record the first and the last to compute the width of level
             for (int i = 0; i < levelSize; i++) {
