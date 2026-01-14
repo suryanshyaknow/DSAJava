@@ -30,8 +30,8 @@ public class MaximumProductOfSplittedBinaryTree {
         long rSum = getSubtreeSum(root.right, maxProd, S);
 
         long subtreeSum = root.val + lSum + rSum;
-        long remSum = S - subtreeSum;
 
+        long remSum = S - subtreeSum;
         // Update the prod
         maxProd[0] = Math.max(maxProd[0], subtreeSum * remSum);
 
