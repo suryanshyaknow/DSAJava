@@ -28,6 +28,9 @@ public class BFS {
             }
         }
         return res;  // return BFS traversal order
+
+        // Time complexity: O(N) for queue traversal + O(2E) neighbors iteration, i.e., degree of a node
+        // Space complexity: O(3N)
     }
 
 

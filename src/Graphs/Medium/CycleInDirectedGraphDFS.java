@@ -28,8 +28,10 @@ public class CycleInDirectedGraphDFS {
     }
 
     private boolean detectCycleDFS(int node, boolean[] vis, boolean[] pathVis, List<List<Integer>> adj) {
-        // Traverse each node and mark its entry in vis and pathVis.
-        // Upon reaching the end node and then while backtracking, remove their entries from a path vis.
+        // Key Intuition: It's only gonna be a cycle if we encounter an already visited node on the same path.
+
+        // Step i. Traverse each node and mark its entry in vis and pathVis.
+        // Step ii. Upon reaching the end node and then while backtracking, remove their entries from a path vis.
         // Cuz you've traversed a path and there was no cycle found.
         // Note that when you reach a node that is previously visited as well as path visited then only it's a cycle.
         vis[node] = true;

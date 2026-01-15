@@ -1,9 +1,6 @@
 package Graphs.Medium;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 
 public class CycleInUndirectedGraph {
 
@@ -33,6 +30,7 @@ public class CycleInUndirectedGraph {
         }
 
         int[] vis = new int[V];
+        Arrays.fill(vis, -1);
         for (int i = 0; i < V; i++) {
             if (vis[i] != 1) {
 //                boolean isDetected = detectCycleBFS(i, vis, adj);
@@ -61,6 +59,10 @@ public class CycleInUndirectedGraph {
     }
 
     public boolean detectCycleBFS(int startingNode, int[] vis, List<List<Integer>> adj) {
+        // Intuition is pretty simple.
+        // We just do the BFS traversal along w keeping track of each node's parent.
+        // And if at any junction, we encounter a node who's not a parent but is already visited,
+        // then we determine that graph has a cfkn cycle.
         Queue<Pair> q = new LinkedList<>();
         q.offer(new Pair(startingNode, -1)); // Since root didn't have any parent
         vis[startingNode] = 1;
