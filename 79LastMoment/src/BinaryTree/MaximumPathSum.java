@@ -35,7 +35,7 @@ public class MaximumPathSum {
         int rhSum = Math.max(0, computeHeightSum(root.right));
 
         // Now think about it, to compute path sum we need to have lhSum and rhSum, so
-        // we don't really need to compute it dedicately for each node, we'd leverage
+        // we don't really need to dedicate a computation for each node, we'd leverage
         // recursion, i.e., the nodes being processed first in the recursion
         maxPathSum = Math.max(maxPathSum, root.val + lhSum + rhSum);
 

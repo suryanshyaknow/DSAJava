@@ -10,7 +10,7 @@ public class VerticalOrderTraversal {
         private int vertical; // y coordinate
         private int level; // x coordinate
 
-        Tuple (TreeNode node, int vertical, int level) {
+        Tuple(TreeNode node, int vertical, int level) {
             this.node = node;
             this.vertical = vertical;
             this.level = level;
@@ -30,20 +30,23 @@ public class VerticalOrderTraversal {
         while (!q.isEmpty()) {
             int levelSize = q.size();
 
-            for (int i=0; i < levelSize; i++) {
+            for (int i = 0; i < levelSize; i++) {
                 Tuple tup = q.poll();
                 TreeNode node = tup.node;
                 int y = tup.vertical;
                 int x = tup.level;
 
                 // Populate the map
+                // Insert the vertical if it ain't already there
                 if (!map.containsKey(y)) map.put(y, new TreeMap<>());
+                // Insert the level if it ain't already there
                 if (!map.get(y).containsKey(x)) map.get(y).put(x, new PriorityQueue<>());
+                // Insert the node at for that level and the vertical in the PQ
                 map.get(y).get(x).offer(node.val);
 
                 // Insert the node's left and right
-                if (node.left != null) q.offer(new Tuple(node.left, y-1, x+1));
-                if (node.right != null) q.offer(new Tuple(node.right, y+1, x+1));
+                if (node.left != null) q.offer(new Tuple(node.left, y - 1, x + 1));
+                if (node.right != null) q.offer(new Tuple(node.right, y + 1, x + 1));
             }
         }
 
@@ -52,7 +55,7 @@ public class VerticalOrderTraversal {
         for (TreeMap<Integer, PriorityQueue<Integer>> xMap : map.values()) {
             List<Integer> level = new ArrayList<>();
 
-            for (PriorityQueue<Integer> pq: xMap.values()) {
+            for (PriorityQueue<Integer> pq : xMap.values()) {
                 while (!pq.isEmpty()) level.add(pq.poll());
             }
             res.add(level);
