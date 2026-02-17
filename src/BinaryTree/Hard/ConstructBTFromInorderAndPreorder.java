@@ -8,27 +8,37 @@ import java.util.Map;
 public class ConstructBTFromInorderAndPreorder {
 
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        Map<Integer, Integer> iMap = new HashMap<>();
+        // Basically, we'll recurse and kinda generate inorder
+        // and preorder for each subtree
 
+        // First off, we're gonna need the idx of root node
+        // in inorder identified by preorder
+        HashMap<Integer, Integer> inMap = new HashMap<>();
         for (int i = 0; i < inorder.length; i++) {
-            iMap.put(inorder[i], i);
+            inMap.put(inorder[i], i); // Node: Node's idx in inorder
         }
-        TreeNode root = buildTreeHelper(preorder, 0, preorder.length - 1, inorder, 0, inorder.length - 1, iMap);
-        return root;
+
+        return construct(preorder, 0, preorder.length - 1,
+                inorder, 0, inorder.length - 1, inMap);
     }
 
-    private TreeNode buildTreeHelper(int[] preorder, int preStart, int preEnd, int[] inorder, int inStart, int inEnd, Map<Integer, Integer> iMap) {
+    private static TreeNode construct(int[] preorder, int preStart, int preEnd,
+                                      int[] inorder, int inStart, int inEnd, HashMap<Integer, Integer> inMap) {
         if (preStart > preEnd || inStart > inEnd) return null;
 
-        // Identify the root from preorder
+        // Create root
         TreeNode root = new TreeNode(preorder[preStart]);
-        int inRootIdx = iMap.get(preorder[preStart]);
-        int numsLeft = inRootIdx - inStart; // No. of nodes in left subtree
+        int rootIdx = inMap.get(preorder[preStart]);
+        int nodesLeft = rootIdx - inStart; // Num of nodes to the left
 
-        // Attach left and right
-        root.left = buildTreeHelper(preorder, preStart + 1, preStart + numsLeft, inorder, inStart, inRootIdx - 1, iMap);
-        root.right = buildTreeHelper(preorder, preStart + numsLeft + 1, preEnd, inorder, inRootIdx + 1, inEnd, iMap);
-
+        root.left = construct(
+                preorder, preStart + 1, preStart + nodesLeft,
+                inorder, inStart, rootIdx - 1, inMap
+        );
+        root.right = construct(
+                preorder, preStart + nodesLeft + 1, preEnd,
+                inorder, rootIdx + 1, inEnd, inMap
+        );
         return root;
     }
 

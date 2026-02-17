@@ -28,8 +28,8 @@ public class BurningTree {
         q.offer(targetNode);
         int time = 0;
 
-        Set<TreeNode> vis = new HashSet<>(); // Already burnt nodes
-        vis.add(targetNode);
+        Set<TreeNode> burntNodes = new HashSet<>(); // Already burnt nodes
+        burntNodes.add(targetNode);
 
         while (!q.isEmpty()) {
             int levelSize = q.size();
@@ -39,24 +39,24 @@ public class BurningTree {
                 TreeNode node = q.poll();
 
                 // Process the left branch
-                if (node.left != null && !vis.contains(node.left)) {
+                if (node.left != null && !burntNodes.contains(node.left)) {
                     q.offer(node.left);
-                    vis.add(node.left);
+                    burntNodes.add(node.left);
                     flag = 1;
                 }
 
                 // Process the right branch
-                if (node.right != null && !vis.contains(node.right)) {
+                if (node.right != null && !burntNodes.contains(node.right)) {
                     q.offer(node.right);
-                    vis.add(node.right);
+                    burntNodes.add(node.right);
                     flag = 1;
                 }
 
                 // Process the parent branch
                 TreeNode par = hashMap.get(node);
-                if (par != null && !vis.contains(par)) {
+                if (par != null && !burntNodes.contains(par)) {
                     q.offer(par);
-                    vis.add(par);
+                    burntNodes.add(par);
                     flag = 1;
                 }
             }
