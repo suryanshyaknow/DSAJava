@@ -15,7 +15,7 @@ public class DFS {
 
         // Space complexity: O(V) for visited array + O(V) for recursion stack space.
 
-        // Time complexity: O(V + 2E)
+        // Time complexity: O(V + 2E), i.e. the traversal + indegrees of the nodes being traversed, i.e., 2E
         // i. You visit each vertex once → that’s your O(V)
         // ii. For each vertex, you iterate over its adjacency list.
         //  - If the neighbor is unvisited → recurse.
