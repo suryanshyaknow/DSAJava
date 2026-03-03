@@ -1,4 +1,4 @@
-package Graphs;
+package Graphs.ConnectedComponents;
 
 import java.util.ArrayList;
 import java.util.HashSet;
