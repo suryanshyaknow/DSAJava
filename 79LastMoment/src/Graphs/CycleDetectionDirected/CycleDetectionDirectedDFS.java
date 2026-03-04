@@ -1,4 +1,4 @@
-package Graphs.CycleDetectionInDirectedGraphs;
+package Graphs.CycleDetectionDirected;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,10 +30,12 @@ public class CycleDetectionDirectedDFS {
             }
         }
         return false;
+
+        // Time complexity: O(V + E)
+        // Space complexity: O(V) for recursion call stack + 2O(V) for visited and path visited
     }
 
     private boolean dfs(int node, int[] vis, int[] pathVis, List<List<Integer>> adj) {
-        int V = adj.size();
         vis[node] = 1;
         pathVis[node] = 1;
 
