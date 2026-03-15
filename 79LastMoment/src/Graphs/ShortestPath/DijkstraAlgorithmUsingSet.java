@@ -63,5 +63,8 @@ public class DijkstraAlgorithmUsingSet {
         // Time complexity: O(E log V)
         // Space complexity: O(V + E) for adj list + O(V) for dist + O(V) for TreeSet - stores atmost one entry per node.
         // Adj list: A list for every vertex + All the edges inside those lists.
+
+        // NOTE: Also note that the “set” part isn’t really the main reason we use TreeSet.
+        // The real reason is ordering + ability to delete arbitrary elements.
     }
 }
