@@ -27,7 +27,7 @@ public class UniquePaths {
             }
         }
 
-        return countPaths(m - 1, n - 1, m, n, dp);
+        return dp[N][M];
     }
 
     public int uniquePathsMemoization(int m, int n) {
@@ -52,8 +52,8 @@ public class UniquePaths {
 
         // Now, from the N & M, we could either go up
         // or left.
-        int left = countPaths(i, j - 1, N, M, dp);
-        int up = countPaths(i - 1, j, N, M, dp);
+        int left = countPathsMemo(i, j - 1, N, M, dp);
+        int up = countPathsMemo(i - 1, j, N, M, dp);
 
         return dp[i][j] = left + up;
 
