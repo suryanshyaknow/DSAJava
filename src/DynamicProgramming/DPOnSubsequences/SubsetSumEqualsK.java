@@ -5,7 +5,7 @@ public class SubsetSumEqualsK {
     static Boolean isSubsetSum(int arr[], int sum) {
         // code here
         int N = arr.length - 1;
-        return isSubsetSumHelper(N-1, arr, sum);
+        return isSubsetSumHelper(N - 1, arr, sum);
     }
 
     private static Boolean isSubsetSumHelper(int idx, int[] arr, int target) {
