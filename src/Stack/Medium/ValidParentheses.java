@@ -12,12 +12,15 @@ public class ValidParentheses {
 
         for (int i = 0; i < s.length(); i++) {
             Character ch = s.charAt(i);
+
             if (ch == '(' || ch == '{' || ch == '[') {
                 st.push(ch);
             } else {
                 if (st.isEmpty()) return false;
+
                 Character op = st.peek();
-                if (op == '(' && ch == ')' )
+
+                if (op == '(' && ch == ')')
                     st.pop();
                 else if (op == '{' && ch == '}')
                     st.pop();

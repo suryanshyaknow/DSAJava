@@ -12,6 +12,22 @@ public class NGE {
         int res[] = new int[N1];
 
         int nge[] = new int[N2]; // O(N2)
+
+        /*
+         * INTUITION:
+         * We process nums2 from right → left and use a MONOTONIC DECREASING STACK.
+         *
+         * Why?
+         * For each element, we want the first greater element on its RIGHT.
+         *
+         * Stack helps us maintain "useful candidates":
+         * - We remove all elements <= current because they can never be the NGE
+         *   for this element or any element to its left.
+         * - After popping, the top of the stack (if exists) is the next greater element.
+         *
+         * This ensures:
+         * - Each element is pushed and popped at most once → O(N)
+         */
         Stack<Integer> st = new Stack<>();
         for (int i = N2 - 1; i >= 0; i--) {
             // Empty the stack till it's empty or all the smaller eles are popped out

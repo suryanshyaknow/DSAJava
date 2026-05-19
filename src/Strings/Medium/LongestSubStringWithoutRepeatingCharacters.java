@@ -6,29 +6,41 @@ public class LongestSubStringWithoutRepeatingCharacters {
 
     public int lengthOfLongestSubstring(String s) {
         int N = s.length();
+
+        // Edge case: empty string
+        if (N == 0) return 0;
+
         int maxLen = 1;
+
+        // If I already know a substring is valid, why would I restart from the scratch?
 
         // Using the sliding window tech
         int leftPtr = 0;
         int rightPtr = 0;
+
+        // Map to store the last seen index of each character
         HashMap<Character, Integer> freqMap = new HashMap<>();
+
         while (rightPtr < N) {
             Character ch = s.charAt(rightPtr);
 
-            // But but.. then we gotta trim the window
-            // and before that update the maxLen
+            // If current character was seen before AND is inside the current window
+            // Trim the window
             if (freqMap.containsKey(ch) && leftPtr <= freqMap.get(ch)) {
 
-                // Reset the leftPtr to latest idx of the repeating character
+                // Move left pointer just after the last occurrence of dupe
+                // This ensures the window remains valid (no duplicates)
                 leftPtr = freqMap.get(ch) + 1;
             }
 
-            // Anyways, gotta put the char in freq map and update its idx,
-            // and move the rightPtr
+            // Update the last seen index of current character
             freqMap.put(ch, rightPtr);
 
+            // Current window size = right - left + 1
             int len = rightPtr - leftPtr + 1;
+
             maxLen = Integer.max(maxLen, len); // Important, update maxLen on every iteration
+            
             rightPtr++;
         }
 
