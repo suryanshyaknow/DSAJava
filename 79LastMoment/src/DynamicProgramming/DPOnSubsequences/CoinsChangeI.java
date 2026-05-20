@@ -4,6 +4,51 @@ import java.util.*;
 
 public class CoinsChangeI {
 
+    public int coinChangeTabulation(int[] coins, int amount) {
+        int N = coins.length;
+
+        // The idea is to pick (could be multiple) or
+        // not pick a coin and keep updating the target
+        // amount, till it hits zero.
+
+        int[][] dp = new int[N][amount + 1];
+
+        for (int i = 0; i < N; i++) {
+            for (int t = 0; t <= amount; t++) {
+                if (t == 0) {
+                    dp[i][t] = 0;
+                    continue;
+                }
+                if (i == 0) {
+                    if (t % coins[i] == 0)
+                        dp[i][t] = t / coins[i];
+                    else
+                        dp[i][t] = Integer.MAX_VALUE;
+                    continue;
+                }
+
+                // pick
+                int pick = Integer.MAX_VALUE;
+                if (coins[i] <= t) {
+                    int res = dp[i][t - coins[i]];
+                    if (res != Integer.MAX_VALUE)
+                        pick = 1 + res;
+                }
+
+                // not pick
+                int notPick = dp[i - 1][t];
+
+                dp[i][t] = Math.min(pick, notPick);
+            }
+        }
+
+        int res = dp[N - 1][amount];
+        return res != Integer.MAX_VALUE ? res : -1;
+
+        // Time: O(N * amount)
+        // Space: O(N * amount)
+    }
+
     public int coinChangeMemo(int[] coins, int amount) {
         int N = coins.length;
 
