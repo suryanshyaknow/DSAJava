@@ -20,11 +20,13 @@ public class UnboundedKnapsack {
                     continue;
                 }
                 if (i == 0) {
-                    if (t % wt[i] == 0) {
-                        dp[i][t] = val[i] * t / wt[i];
-                    } else {
-                        dp[i][t] = 0;
-                    }
+//                    if (t % wt[i] == 0) {
+//                        dp[i][t] = val[i] * t / wt[i];
+//                    } else {
+//                        dp[i][t] = 0;
+//                    }
+                    dp[i][t] = val[i] * t / wt[i]; // Cuz it's not mentioned that exact filling is MUST.
+                    // Unused capacity is allowed
                     continue;
                 }
 
