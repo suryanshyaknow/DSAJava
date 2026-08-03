@@ -1,6 +1,6 @@
 package SlidingWindow;
 
-public class BeestTimeToBuyAndSellStock {
+public class BestTimeToBuyAndSellStock {
 
     public int maxProfit(int[] prices) {
         int N = prices.length;
