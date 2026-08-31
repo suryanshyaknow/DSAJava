@@ -30,7 +30,7 @@ public class SlidingWindowMaximum {
             dq.add(r);
 
             // Ditch the elements in dq that fall outside the current window
-            while (!dq.isEmpty() && dq.peekFirst() < l) dq.pollFirst();
+            if (!dq.isEmpty() && dq.peekFirst() < l) dq.pollFirst();
 
             // Start storing the maximums when atleast one window has passed
             if (r >= k - 1) {
