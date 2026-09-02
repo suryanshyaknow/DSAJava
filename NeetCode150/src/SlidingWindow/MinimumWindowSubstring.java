@@ -8,8 +8,15 @@ public class MinimumWindowSubstring {
         // Intuition: So the idea is to find a valid window/ans,
         // store it as a potential answer, and then shrink the
         // window till the window is no longer valid to find even
-        // a better and, and then again find a potential ans.
+        // a better ans, and then again find a potential ans.
         // And so on..
+
+        // Once we find a substring that is valid, extending
+        // it doesn't avail anything for us, cuz we're meant
+        // to find the smallest.
+        // So once a valid string has been found, try removing
+        // valid chars from it until it's no longer valid.
+        // Expand -> Valid -> Shrink -> Invalid -> Expand.. so on..
 
         int N = s.length();
         int T = t.length();
