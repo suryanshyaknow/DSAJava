@@ -51,11 +51,6 @@ public class AddTwoNumbersLL {
         if (head2 == null) return head1;
         if (head1 == null) return head2;
 
-        // First off, reverse them and figure out the lengths of them both
-//        int len1 = findLen(head1);
-//        int len2 = findLen(head2);
-//        int lenNewList = Math.max(len2, len1);
-
         // Constructing new sum list
         ListNode dummyNode = new ListNode(-1);
         ListNode temp1 = head1;
