@@ -16,15 +16,17 @@ public class MergeKSortedLists {
         // merge, and there are log(k) levels.
         // Time: O(N log k), where N = total number of nodes.
 
-        int k = lists.length;
-        if (k == 0)
+        int N = lists.length;
+        if (N == 0)
             return null;
 
+        int k = N; // number of lists left to merge
         while (k > 1) { // Meaning till one merged list is left
-            int mergedListIdx = 0;
+            int mergedListIdx = 0; // How many lists have been merged till now
 
             for (int i = 0; i < k; i += 2) {
                 ListNode mergedList = (i + 1 < k) ? mergeLists(lists[i], lists[i + 1]) : lists[i];
+
                 lists[mergedListIdx] = mergedList;
                 mergedListIdx++;
             }
