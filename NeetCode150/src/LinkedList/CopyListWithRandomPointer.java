@@ -21,49 +21,49 @@ public class CopyListWithRandomPointer {
         // Intuition: We're gonna try to do this w/o using any
         // external additional space
 
-        // Step 1. Create deep copy of each node and put them in between
-        // their parent and parent's next.
+        // Step 1. Create deep copy of each node and insert it bw its
+        // parent and parent's next
         Node curr = head;
         while (curr != null) {
             Node dc = new Node(curr.val);
             dc.next = curr.next;
             curr.next = dc;
 
-            // Move the pointer
+            // Move the ptr
             curr = curr.next.next;
         }
 
-        // Step 2. Mirror the random linkage from their parent
+        /// 2. Now mirror the random linkages in deep copy
         curr = head;
         while (curr != null) {
-            Node currRandom = curr.random;
-            if (currRandom != null) {
-                Node dc = curr.next;
-                dc.random = currRandom.next;
-            }
+            if (curr.random != null)
+                curr.next.random = curr.random.next;
 
-            // Move the pointer
+            // Move the ptr
             curr = curr.next.next;
         }
 
         // Step 3. Now extract the deep copy while restoring the org ll
         // to its pristine condition
         curr = head;
-        Node dummy = new Node(-1);
-        dummy.next = curr.next; // Point dummy to head of clone list
-        Node newCurr = curr.next;
+        Node dcHead = curr.next;
         while (curr != null) {
-            // Restore the orginal linkage of parent node
-            curr.next = curr.next.next;
-            if (curr.next != null)
-                newCurr.next = curr.next.next; // parent's next's clone
+            Node dc = curr.next;
+            if (dc != null) {
+                // Restore dc parent linkage
+                // Node orgNext = dc.next;
+                curr.next = dc.next;
 
-            // Move the pointers
+                // Point the dc next to its parent next's next
+                if (dc.next != null)
+                    dc.next = dc.next.next;
+            }
+
+            // Now that cur org next has been restored
             curr = curr.next;
-            newCurr = newCurr.next;
         }
 
-        return dummy.next;
+        return dcHead;
         // Time: O(3N)
         // Space: O(1)
     }
