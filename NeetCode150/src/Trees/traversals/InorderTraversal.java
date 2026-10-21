@@ -2,9 +2,7 @@ package Trees.traversals;
 
 import Trees.TreeNode;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class InorderTraversal {
 
@@ -26,6 +24,10 @@ public class InorderTraversal {
 
     /**
      * Iterative Inorder Traversal
+     *
+     * Stack vs Deque: Stack works, but it’s a legacy synchronized class.
+     * Deque<TreeNode> st = new ArrayDeque<>() is the usual recommendation
+     * in Java, with the same push/pop.
      */
     public List<Integer> inorderTraversalIterative(TreeNode root) {
         // Intuition: We're gonna simulate the recursive approach
@@ -39,7 +41,7 @@ public class InorderTraversal {
         // right.
 
         List<Integer> res = new ArrayList<>();
-        Stack<TreeNode> st = new Stack<>();
+        Deque<TreeNode> st = new ArrayDeque<>();
 
         TreeNode curr = root;
         while (curr != null || !st.isEmpty()) {

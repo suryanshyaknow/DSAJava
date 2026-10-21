@@ -27,10 +27,14 @@ public class PreorderTraversal {
 
     public List<Integer> preorderTraversalIterative(TreeNode root) {
         // Emulate the recursion
-        // Now see, since we're gonna wanna move back to our
-        // parent nodes like we do in recursion -- we don't
-        // have any back pointers, so we'll use stack. we'll
-        // before hand save the parent nodes.
+        // Okay so first note that preorder goes: root -> left -> right
+        //
+        // Now see, after processing root and its left since we're gonna
+        // wanna move back to our parent nodes like we do in recursion
+        // -- we don't have any back pointers -- so we'll use stack. We'll
+        // beforehand save the parent nodes. So that by the time left is
+        // processed stack's top gives the right node in succession to process.
+        //
         // Do note that in preorder, our root nodes are already
         // processed beforehand when we climb up the recursion,
         // so wouldn't it be better to presave the right nodes
