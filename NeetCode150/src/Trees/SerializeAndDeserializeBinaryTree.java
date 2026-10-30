@@ -30,6 +30,11 @@ public class SerializeAndDeserializeBinaryTree {
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
+        // Mind that serialize gives back "" for an empty tree, and
+        // "".split(",") hands us [""] -- not an empty array. So guard
+        // here, else parseInt("") blows up down in the dfs.
+        if (data.isEmpty()) return null;
+
         String[] dataArr = data.split(",");
 
         i = 0;
@@ -39,7 +44,12 @@ public class SerializeAndDeserializeBinaryTree {
     }
 
     private TreeNode deserializeDfs(String[] dataArr) {
-        if (dataArr[i++].equals("N")) return null;
+        // Don't advance i in the check itself -- we still need to read
+        // the very same token below to build the node off of.
+        if (dataArr[i].equals("N")) {
+            i++;
+            return null;
+        }
 
         TreeNode root = new TreeNode(Integer.parseInt(dataArr[i]));
         i++;
