@@ -81,6 +81,8 @@ public class LRUCache {
     }
 
     public void put(int key, int value) {
+        if (capacity == 0) return;
+
         // See if key exists
         if (cache.containsKey(key)) {
             Node node = cache.get(key);
