@@ -7,58 +7,58 @@ public class TopKFrequentElements {
     public int[] topKFrequentOptimal(int[] nums, int k) {
         int N = nums.length;
 
-        HashMap<Integer, Integer> freqMap = new HashMap<>();
-        for (int i = 0; i < N; i++) {
-            freqMap.put(nums[i], freqMap.getOrDefault(nums[i], 0) + 1);
-        }
-
-        // We already have a freq map. And the max freq of any
-        // element is N as an ele can't occur more than the size
-        // of the array.
+        // Intuition: Hashing + Bucket sort
         //
-        // Since the frequencies are bound from 1 to N. We could
-        // bucket the elements by their frequencies. And simply
-        // pick top K elements from the buckets where there are
-        // any elements.
+        // First off, we have to store the elements w their
+        // frequencies in a hashmap.
+        // Then we can simply bucket the elements by their
+        // frequencies and simply extract the top k frequent
+        // elements.
+        // Note that we can do this because frequencies are bound
+        // to be O to N.
 
-        // Create a bucket to accommodate 1 to N frequencies
-        List<Integer>[] buckets = new ArrayList[N + 1]; // bucket for each freq
+        Map<Integer, Integer> hash = new HashMap<>();
+        for (int i = 0; i < N; i++) {
+            hash.put(nums[i], hash.getOrDefault(nums[i], 0) + 1);
+        } // O(N)
 
-        // Iterate over hashmap entries and put into buckets
-        for (Map.Entry<Integer, Integer> entry : freqMap.entrySet()) {
-            int key = entry.getKey();
-            int val = entry.getValue();
+        // Bucket Structure: ArrayList<>[N + 1]; 0 -> N
+        List<Integer>[] buckets = new ArrayList[N + 1];
+        // Iterate over hash entries
+        for (Map.Entry<Integer, Integer> entry : hash.entrySet()) {
+            int ele = entry.getKey();
+            int freq = entry.getValue(); // freq
 
-            if (buckets[val] == null)
-                buckets[val] = new ArrayList<>();
-            buckets[val].add(key);
+            List<Integer> candidates = buckets[freq];
+            if (candidates == null)
+                candidates = new ArrayList<>();
+            candidates.add(ele);
+            buckets[freq] = candidates;
+        } // O(U)
 
-        } // O(M) where M is unique elements
-
-        // Now, all the buckets have been filled
-        // Extract the top k elements from the end
+        // Extract top k elements
+        // Iterate over buckets from last: decreasing freq
         int[] res = new int[k];
         int cnt = 0;
-        // Iterate over buckets and fetch the elements in 'em
         for (int i = N; i >= 0; i--) {
             if (cnt >= k)
                 break;
 
-            List<Integer> lis = buckets[i];
-            if (lis != null && !lis.isEmpty()) {
-                for (int j = 0; j < lis.size(); j++) {
-                    if (cnt == k)
+            // Fetch the bucket
+            List<Integer> bucket = buckets[i];
+            if (bucket != null && !bucket.isEmpty()) {
+                for (int j = 0; j < bucket.size(); j++) {
+                    if (cnt >= k)
                         break;
-
-                    res[cnt++] = lis.get(j);
+                    res[cnt++] = bucket.get(j);
                 }
             }
-        } // O(N + M) cuz exactly elements lie across all the buckets
+        } // O(N + U)
 
         return res;
 
         // Time: O(N)
-        // Space: O(M) + O(N)
+        // Space: O(U) + O(N)
     }
 
     static class Pair {
@@ -71,120 +71,50 @@ public class TopKFrequentElements {
         }
     }
 
-    public int[] topKFrequentUsingMinHeap(int[] nums, int k) {
+    private static class Node {
+        int ele;
+        int freq;
 
-        // Min Heap: Smallest ele is on the top always
-        // Max Heap: Largest ele is on the top always
+        Node(int ele, int freq) {
+            this.ele = ele;
+            this.freq = freq;
+        }
+    }
 
-        // In java, Heap is implemented via PriorityQueue
-
-        // So the intuition is pretty clear.
-        // Measure the frequency of each ele and store them
-        // both in Max Heap and just extract the first 4 eles.
-
+    public int[] topKFrequent(int[] nums, int k) {
         int N = nums.length;
-        HashMap<Integer, Integer> freqMap = new HashMap<>();
 
-        for (int ele : nums) {
-            freqMap.put(ele, freqMap.getOrDefault(ele, 0) + 1);
-        } // O(N)
+        // Intuition: Hash + min. Heap
+        // First off, store the frequencies of each element in a
+        // hash map and then start storing each element into
+        // min heap based on freq of element. The ele w the least
+        // number of occurrences will be at top.
+        //
+        // In java, heap is implemented using PriorityQueue
+        Map<Integer, Integer> hash = new HashMap<>();
 
-        // Store the (key, val) pair in PQ
-        PriorityQueue<Pair> pq = new PriorityQueue<>((a, b) -> a.freq - b.freq); // Min Heap
-        for (Map.Entry<Integer, Integer> entry : freqMap.entrySet()) {
-            int key = entry.getKey();
-            int val = entry.getValue();
-
-            pq.add(new Pair(key, val)); // O(log k)
-
-            // Don't allow entries more than k at any instance
-            if (pq.size() > k)
-                pq.poll(); // O(log k)
-
+        for (int i = 0; i < N; i++) {
+            hash.put(nums[i], hash.getOrDefault(nums[i], 0) + 1);
         }
 
-        // Now extract the first k elements from the PQ
-        int res[] = new int[k];
+        // Initialize a min heap
+        PriorityQueue<Node> pq = new PriorityQueue<>((a, b) -> a.freq - b.freq);
+        for (Map.Entry<Integer, Integer> entry : hash.entrySet()) {
+            pq.offer(new Node(entry.getKey(), entry.getValue())); // O(log k)
+
+            // Pop the element w least freq
+            if (pq.size() > k) pq.poll(); // O(log k)
+        } // O(U log k) where u -> unique elements
+
+        int[] res = new int[k];
+        // Iterate over pq for k times and retrive the candidat ele
         for (int i = 0; i < k; i++) {
             res[i] = pq.poll().ele;
-        } // O (k. log k)
+        } // O(k log k)
 
         return res;
 
-        // Time: O(N) + O(M log k) + O(k log k) where M -> unique elements in arr
-        // ~ O(N + M log k)
-        // Space: O(M) + O(k) + O(k)
+        // Time: O(N + U log k)
+        // Space: O(N)
     }
-
-    public int[] topKFrequentUsingMaxHeap(int[] nums, int k) {
-
-        // Min Heap: Smallest ele is on the top always
-        // Max Heap: Largest ele is on the top always
-
-        // In java, Heap is implemented via PriorityQueue
-
-        // So the intuition is pretty clear.
-        // Measure the frequency of each ele and store them
-        // both in Max Heap and just extract the first 4 eles.
-
-        HashMap<Integer, Integer> freqMap = new HashMap<>();
-
-        for (int ele : nums) {
-            freqMap.put(ele, freqMap.getOrDefault(ele, 0) + 1);
-        }
-
-        // Store the (key, val) pair in PQ
-        PriorityQueue<Pair> pq = new PriorityQueue<>((a, b) -> b.freq - a.freq); // Max Heap
-        for (Map.Entry<Integer, Integer> entry : freqMap.entrySet()) {
-            int key = entry.getKey();
-            int val = entry.getValue();
-
-            pq.add(new Pair(key, val));
-        }
-
-        // Now extract the first k elements from the PQ
-        int res[] = new int[k];
-        for (int i = 0; i < k; i++) {
-            res[i] = pq.poll().ele;
-        } // O (k. log M)
-
-        return res;
-
-        // Time: O(N) + O(M log M) + O(k log M) where M -> unique elements in arr
-        // ~ O(N + (M + k) log M)
-        // Space: O(M) + O(M) + O(k)
-
-        // --- Improvement 1: Skip the Pair class ---
-        // You can use int[] directly in the PQ instead of a custom Pair:
-        //   PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> b[1] - a[1]);
-        //   pq.add(new int[]{key, val});
-        //   res[i] = pq.poll()[0];
-
-        // --- Improvement 2: Min Heap of size k (better complexity) ---
-        // Instead of a max heap over all M unique elements, maintain a min heap
-        // capped at size k. Push each entry; if size exceeds k, poll the minimum.
-        // This gives O(M log k) instead of O(M log M), which is faster when k << M.
-        //   PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> a[1] - b[1]); // min heap
-        //   for (Map.Entry<Integer, Integer> entry : freqMap.entrySet()) {
-        //       pq.add(new int[]{entry.getKey(), entry.getValue()});
-        //       if (pq.size() > k) pq.poll();
-        //   }
-
-        // --- Improvement 3: Bucket Sort — O(N) optimal ---
-        // Frequencies are bounded by N, so use an array of lists indexed by freq.
-        // Scan from the end (highest freq) and collect k elements.
-        //   List<Integer>[] bucket = new List[N + 1];
-        //   for (Map.Entry<Integer, Integer> e : freqMap.entrySet()) {
-        //       int freq = e.getValue();
-        //       if (bucket[freq] == null) bucket[freq] = new ArrayList<>();
-        //       bucket[freq].add(e.getKey());
-        //   }
-        //   int[] res = new int[k]; int idx = 0;
-        //   for (int freq = N; freq >= 1 && idx < k; freq--)
-        //       if (bucket[freq] != null)
-        //           for (int ele : bucket[freq]) if (idx < k) res[idx++] = ele;
-        //   return res;
-        // Time: O(N), Space: O(N)
-    }
-
 }
