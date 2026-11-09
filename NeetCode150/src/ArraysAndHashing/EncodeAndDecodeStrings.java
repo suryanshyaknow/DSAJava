@@ -30,11 +30,19 @@ public class EncodeAndDecodeStrings {
         while (i < N) {
 
             // Read the len till you encounter '/'
-            int len = 0;
+            /**
+             int len = 0;
+             while (s.charAt(i) != '/') {
+             len = len * 10 + s.charAt(i) - '0';
+             i++;
+             }
+             */
+            StringBuilder digits = new StringBuilder();
             while (s.charAt(i) != '/') {
-                len = len * 10 + s.charAt(i) - '0';
+                digits.append(s.charAt(i));
                 i++;
             }
+            int len = Integer.parseInt(digits.toString());
 
             // Skip the delimiters
             i += 2;
