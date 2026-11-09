@@ -50,9 +50,9 @@ public class CourseScheduleII {
 
         // Step 3. Dequeue the nodes in queue and decrease the
         // indegree of their neighbors -- dependent courses.
-        // It signifies that deuqeud course no longer count
-        // as prerequisites for its depedent courses.
-        int cnt = 0; // pointe for populating the res
+        // It signifies that dequeued course no longer count
+        // as prerequisites for its dependent courses.
+        int cnt = 0; // pointer for populating the res
         while (!q.isEmpty()) {
             int node = q.poll();
             res[cnt++] = node;
@@ -67,7 +67,7 @@ public class CourseScheduleII {
 
         return cnt == N ? res : new int[0];
 
-        // Time: O(N + E
+        // Time: O(N + E)
         // Space: O(N + E)
     }
 }
