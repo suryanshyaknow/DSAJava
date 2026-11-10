@@ -5,6 +5,7 @@ import java.util.*;
 public class MergeIntervals {
 
     public int[][] merge(int[][] intervals) {
+        if (intervals == null || intervals.length == 0) return null;
         int N = intervals.length;
 
         // Intuition: The idea is pretty simple.
