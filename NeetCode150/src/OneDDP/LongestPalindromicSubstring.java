@@ -4,8 +4,9 @@ public class LongestPalindromicSubstring {
 
     public String longestPalindrome(String s) {
         int N = s.length();
+        if (N == 0) return "";
 
-        // Intuition: If we go brute force way aorund this prob
+        // Intuition: If we go brute force way around this prob
         // then we have to first generate all subarray (O(N ^2))
         // and for every sub array generated, we had to check if
         // it's a palindrome -- another O(N) ~ O(N^3).
@@ -13,7 +14,7 @@ public class LongestPalindromicSubstring {
         //
         // So instead we can be smart, and instead of generating
         // all the subarrays we can pick a char and treat it as the
-        // centre of the palindrome and expand left and right and
+        // center of the palindrome and expand left and right and
         // dynamically update the length of the palindrome.
         // Remember to take care of even length palis as well.
 
