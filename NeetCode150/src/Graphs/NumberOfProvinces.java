@@ -16,7 +16,7 @@ public class NumberOfProvinces {
 
         // Initially, every node is a parent of itself
         int[] par = new int[N];
-        for (int i=0; i < N; i++) par[i] = i;
+        for (int i = 0; i < N; i++) par[i] = i;
 
         // Rank array
         // Inititally, every node's rank is 0 since none
@@ -31,8 +31,9 @@ public class NumberOfProvinces {
         // here, adj matrix
         // Everytime a union bw two nodes is successful, we decrement
         // the numer of disconnected comps
-        for (int i=0; i < N; i++) { // nodes
-            for (int j=0; j < N; j++) { // nodes 'connections
+        for (int i = 0; i < N; i++) { // nodes
+            for (int j = i + 1; j < N; j++) { // nodes 'connections
+                // NOTE: j = i + 1 because in undirected graph matrix is symmetrical
                 // if isConnected(i, j) == 1
                 // Implies there's an edge bw i and j
                 if (i == j) continue; // Node is indeed a parent of itself
@@ -44,13 +45,13 @@ public class NumberOfProvinces {
         return cnt;
 
         // Time: O(N ^ 2 . alpha(N)) ~ amortized
-        // Space: O(alpha(N)) ~ amortized
+        // Space: O(N)
     }
 
     /**
      * Gets the root parent of the given node.
      * Also does the path compression while it's at it.
-     *
+     * <p>
      * Path compression: It directly connects the nodes to the root nodes
      * of their parent, rpeventing the graph to take a linkedlist like form.
      */
@@ -87,7 +88,7 @@ public class NumberOfProvinces {
         if (rank[par1] > rank[par2]) {
             par[par2] = par1;
         } else if (rank[par2] > rank[par1]) {
-            par[par1] =  par2;
+            par[par1] = par2;
         } else {
             par[par2] = par1;
             rank[par1] += 1;
