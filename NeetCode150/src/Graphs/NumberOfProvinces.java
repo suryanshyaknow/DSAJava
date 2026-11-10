@@ -53,7 +53,7 @@ public class NumberOfProvinces {
      * Also does the path compression while it's at it.
      * <p>
      * Path compression: It directly connects the nodes to the root nodes
-     * of their parent, rpeventing the graph to take a linkedlist like form.
+     * of their parent, preventing the graph to take a linkedlist like form.
      */
     private int find(int n, int[] par) {
         // If n is a parent of itself

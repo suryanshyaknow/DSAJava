@@ -25,7 +25,7 @@ public class RedundantConnection {
         for (int i = 1; i <= N; i++) par[i] = i;
         int[] rank = new int[N + 1]; // Initially every node starts off w rank 0.
 
-        // Iterate voer edges and connect the nodes
+        // Iterate over edges and connect the nodes
         for (int[] edge : edges) {
             if (!union(edge[0], edge[1], par, rank)) return edge;
             // Meaing if two nodes are already connected directly/indirectly,
@@ -33,15 +33,18 @@ public class RedundantConnection {
         }
 
         return new int[] { -1, -1 };
+
+        // Time: O(N.alpha (N))
+        // Space: O(N)
     }
 
     /**
      * Finds the root parent of a given node.
      * Also does the path compression.
      *
-     * Path compression implies that every node w subparents and root parent
-     * are connected directly w their root parents in the process.
-     * So that we don't have to deal w lls but graphs.
+     * Path compression progressively flattens the DSU trees by moving their
+     * nodes closer to their root parent.
+     * So that we don't have to deal w lls but forest of trees.
      */
     private int find(int n, int[] par) {
         if (n == par[n]) return n;
