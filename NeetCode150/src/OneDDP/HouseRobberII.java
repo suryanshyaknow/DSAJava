@@ -53,4 +53,60 @@ public class HouseRobberII {
 
         return dp[idx] = Math.max(pick, notPick);
     }
+
+    private int robHelperTabulation(int[] nums) {
+        int N = nums.length;
+        int[] dp = new int[N];
+
+        // Bottom-up approach: building solution from the base cases
+        for (int i = 0; i < N; i++) {
+            if (i == 0) {
+                dp[i] = nums[i];
+                continue;
+            }
+
+            // Pick the house
+            int pick = nums[i] + (i >= 2 ? dp[i - 2] : 0);
+            int notPick = dp[i - 1];
+            dp[i] = Math.max(pick, notPick);
+        }
+        return dp[N - 1];
+    }
+
+    public int robTabulation(int[] nums) {
+        // Given that first and last houses are neighbors.
+        // Intuition: The idea is fairly simple. Compute
+        // the max amount that can be robbed if we leave
+        // first house outta the picture, and similarly,
+        // compute the same leaving the last house in the
+        // picture.
+
+        int N = nums.length;
+        if (N == 1)
+            return nums[0];
+
+        // Needn't create two separate temp copies to exclude the houses.
+        return Math.max(
+                robHelperTabulation(nums, 0, N - 2),
+                robHelperTabulation(nums, 1, N - 1));
+    }
+
+    private int robHelperTabulation(int[] nums, int start, int end) {
+        int N = nums.length;
+        int[] dp = new int[N];
+
+        // Bottom-up approach: building solution from the base cases
+        for (int i = start; i <= end; i++) {
+            if (i == start) {
+                dp[i] = nums[i];
+                continue;
+            }
+            // Pick, Not pick
+            int pick = nums[i] + ( i - 2 >= start ? dp[i - 2] : 0);
+            int notPick = dp[i - 1];
+            dp[i] = Math.max(pick, notPick);
+        }
+
+        return dp[end];
+    }
 }
