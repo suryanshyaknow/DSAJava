@@ -19,7 +19,7 @@ public class NumberOfProvinces {
         for (int i = 0; i < N; i++) par[i] = i;
 
         // Rank array
-        // Inititally, every node's rank is 0 since none
+        // Initially, every node's rank is 0 since none
         // of them are connected.
         int[] rank = new int[N];
 
