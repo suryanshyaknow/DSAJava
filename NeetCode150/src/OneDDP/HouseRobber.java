@@ -11,7 +11,7 @@ public class HouseRobber {
         // pick the house and rob it OR skip the house.
         // And return the max whatever choice gives you.
         int N = nums.length;
-        int[] dp = new int[N + 1];
+        int[] dp = new int[N]; // states are idx 0..N-1, no padding slot needed
         Arrays.fill(dp, -1);
 
         return robHelper(N - 1, nums, dp);
