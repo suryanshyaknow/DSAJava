@@ -27,12 +27,10 @@ public class LongestSubstringWithoutRepeatingCharacters {
         while (rightPtr < N) {
             char ch = s.charAt(rightPtr);
 
-            // See if it's a dupe and is within the current window
-            if (hashMap.containsKey(ch) && hashMap.get(ch) >= leftPtr) {
-                // Retrieve the last seen idx
-                int lastSeenIdx = hashMap.get(ch);
-
-                // Shrink/restart the window
+            // If it's a dupe AND is within the current window, chop off the front
+            int lastSeenIdx = hashMap.getOrDefault(ch, -1);
+            if (lastSeenIdx != -1 && lastSeenIdx >= leftPtr) {
+                // Jump straight to one char after the last seen dupe
                 leftPtr = lastSeenIdx + 1;
             }
 
