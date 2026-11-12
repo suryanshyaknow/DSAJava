@@ -44,6 +44,7 @@ public class PreorderTraversal {
         TreeNode curr = root;
         Stack<TreeNode> st = new Stack<>();
 
+        // Remember: Process the root -> Go left -> To Access right you must save it beforehand in stack
         while (curr != null || !st.isEmpty()) {
             if (curr == null) curr = st.pop();
 
