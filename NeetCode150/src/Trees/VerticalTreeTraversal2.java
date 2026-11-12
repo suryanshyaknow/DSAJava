@@ -82,7 +82,7 @@ public class VerticalTreeTraversal2 {
 
         return res;
 
-        // Time: O(k log k) where k <= N
+        // Time: O(N + k log k) where k <= N ~ O(N Log N)
         // Space: O(N)
     }
 
