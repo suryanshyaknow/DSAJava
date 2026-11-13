@@ -31,18 +31,20 @@ public class ReorderList {
 
         // 4. Implement the intuition
         ListNode curr = head;
-        while (splitHead != null) {
+        ListNode splitCurr = splitHead;
+        while (splitCurr != null) {
             // Take splitHead and connect it w curr
             // point the curr to its org next
             // point the splitHead to curr's next
             // Move the splithead to next in split halve
             ListNode front = curr.next;
-            curr.next = splitHead;
-            ListNode splitFront = splitHead.next;
-            splitHead.next = front;
+            ListNode splitFront = splitCurr.next;
+
+            curr.next = splitCurr;
+            splitCurr.next = front;
 
             curr = front;
-            splitHead = splitFront;
+            splitCurr = splitFront;
         }
 
         // Time: O(N + N/2 + N) ~ O(N) -- spot mid, reverse halve, iterate

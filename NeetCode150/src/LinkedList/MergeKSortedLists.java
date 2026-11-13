@@ -31,7 +31,7 @@ public class MergeKSortedLists {
                 mergedListIdx++;
             }
             k = mergedListIdx;
-        }
+        } // log k rounds
 
         return lists[0];
 
