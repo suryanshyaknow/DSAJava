@@ -18,7 +18,7 @@ public class DailyTemperatures {
         for (int i = N - 1; i >= 0; i--) {
             // Enforce the decreasing order
             int ele = temps[i];
-            while (!st.isEmpty() && temps[st.peek()] < ele) st.pop();
+            while (!st.isEmpty() && temps[st.peek()] <= ele) st.pop();
 
             res[i] = st.peek() - i;
             st.push(i);

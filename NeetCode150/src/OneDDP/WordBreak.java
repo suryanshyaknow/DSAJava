@@ -21,7 +21,7 @@ public class WordBreak {
 
         return helper(0, s, dict);
     }
-
+    
     private boolean helper(int i, String s, Set<String> dict) {
         // Base case
         // If the whole string is consumed
@@ -130,5 +130,9 @@ public class WordBreak {
         }
 
         return dp[0];
+
+        // Time: O(N^3)
+        // States, candidates per state, & computing hashes of each candidate
+        // Space: O(N)
     }
 }
